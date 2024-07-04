@@ -17,7 +17,7 @@
 
 ## ESP32 pin setup.  
 
-![ESP32 board](esp32.png "Az-Delivery ESP32 dev board")  
+![ESP32 board](esp32.PNG "Az-Delivery ESP32 dev board")  
 
 ```cpp
 #define RELAY_PIN 23                          // GPIO pin for relay
