@@ -105,12 +105,12 @@
 // Some security boundaries for watering.
 #define MIN_WATERING_THRESHOLD 0
 #define MAX_WATERING_THRESHOLD 3000
-#define MIN_WATERING_DURATION (1*1000)              // 1ms
-#define MAX_WATERING_DURATION (5*1000)              // 5ms
+#define MIN_WATERING_DURATION (1*1000)              // 1s
+#define MAX_WATERING_DURATION (5*1000)              // 5s
 #define MIN_WATERING_REPEAT 1
 #define MAX_WATERING_REPEAT 10
 #define MIN_WATERING_INTERVAL (12*60*60*1000)       // 12h
-#define MAX_WATERING_INTERVAL (14*24*60*60*1000)    // 14d
+#define MAX_WATERING_INTERVAL (30*24*60*60*1000)    // 30d
 
 // Debug
 #ifdef STATS

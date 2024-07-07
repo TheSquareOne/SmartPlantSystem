@@ -7,7 +7,7 @@ Point dataPoint_TemperatureSensor("temperature_sensor");
 Point dataPoint_LuminositySensor("luminosity_sensor");
 Point dataPoint_HumiditySensor("humidity_sensor");
 Point dataPoint_SoilMoistureSensor("soil_moisture_sensor");
-Point dataPoint_WaterPump("water_pump");
+Point dataPoint_WaterPump("watering");
 
 
 /*
