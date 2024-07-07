@@ -4,16 +4,16 @@ This is simple website used to control plant nodes. Website is build using pytho
 
 #### Folder structure:  
 ControlPanel\  
-├─ logs\
+├─ logs\  
 ├─ static\  
 ├── *.js  
 ├── *.css  
 ├─ templates\  
-├── *.html    
+├── *.html  
 ├─ app.py  
 ├─ Dockerfile  
 ├─ requirements.txt  
-└─ .dockerignore
+└─ .dockerignore  
 
 ### docker-compose  
 ```yaml
