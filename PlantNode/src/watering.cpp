@@ -4,6 +4,7 @@
   unsigned int wateringTime = 0;
 #endif
 
+// Settings defining for watering is done.
 unsigned int wateringThreshold = DEFAULT_WATERING_THRESHOLD;
 unsigned int wateringDuration = DEFAULT_WATERING_DURATION;
 unsigned int wateringRepeat = DEFAULT_WATERING_REPEAT;
@@ -14,7 +15,7 @@ unsigned int lastWatering = 0;
 
 
 /*
-
+Initialize relay that handles water pump.
 */
 void initWateringRelay() {
   pinMode(RELAY_PIN, OUTPUT);
@@ -40,25 +41,24 @@ int tryStartWatering(RunningAverage* runningSoilMoisture) {
 
 
 /*
-Set relay to "LOW", which turns the water pump ON.
+This function does the watering.
 */
 void doWatering() {
-  
+
   #ifdef VERBOSE
     wateringTime = millis();
   #endif
   VERBOSE_PRINTLN("Started watering.");
 
-  // 
   int repeat = 0;
   do {
     // If there is no repeats and we water once, soaking time is not needed.
     if(repeat) {
       delay(wateringSoakTime);
     }
-    digitalWrite(RELAY_PIN, LOW);
+    digitalWrite(RELAY_PIN, LOW);   // Set relay to "LOW", which turns the water pump ON.
     delay(wateringDuration);
-    digitalWrite(RELAY_PIN, HIGH);
+    digitalWrite(RELAY_PIN, HIGH);  // Set relay to "HIGH", which turns the water pump OFF.
     repeat++;
   }
   while(repeat < wateringRepeat);
@@ -186,7 +186,10 @@ int setWateringInterval(byte* payload) {
 
 
 /*
+Set new watering repeat amount from MQTT message.
 
+Return 0 if repeat was changed.
+Return 1 if value was invalid and not changed.
 */
 int setWateringRepeat(byte* payload) {
   char* endPointer;
@@ -212,7 +215,14 @@ int setWateringRepeat(byte* payload) {
 }
 
 
+/*
+Set new watering soak time from MQTT message.
+Soak time is time to wait between repeats on watering.
+This is used to prevent water from overflowing from the pot and let water soak in to soil between repeated watering.
 
+Return 0 if soak time was changed.
+Return 1 if value was invalid and soak time not changed.
+*/
 int setWateringSoakTime(byte* payload) {
   int len = strlen((char*)payload)-1;   // -1 because of '\0'.
   int value = 0;
