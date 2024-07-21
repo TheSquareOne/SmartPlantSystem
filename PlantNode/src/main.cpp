@@ -45,15 +45,18 @@ void loop() {
       sensorTimer = millis();
     #endif
 
+    // Luminosity
     if(!getLuminosity(&luminosity)) {
       storeValue("luminosity", luminosity);
     }
 
+    // Humidity & temperature
     if(!getHumidityAndTemperature(&humidity, &temperature)) {
       storeValue("humidity", humidity);
       storeValue("temperature", temperature);
     }
 
+    // Soil moisture
     if(!getSoilMoisture(&soilMoisture)) {
       storeValue("soilMoisture", soilMoisture);
       runningSoilMoisture.add(soilMoisture);

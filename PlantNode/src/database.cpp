@@ -1,8 +1,10 @@
 #include "smart_stuff.h"
 
+// Database client
 InfluxDBClient databaseClient(INFLUXDB_URL, INFLUXDB_ORG, 
                               INFLUXDB_BUCKET, INFLUXDB_TOKEN);
 
+// Datapoints
 Point dataPoint_TemperatureSensor("temperature_sensor");
 Point dataPoint_LuminositySensor("luminosity_sensor");
 Point dataPoint_HumiditySensor("humidity_sensor");
@@ -45,13 +47,13 @@ void setDatabaseSettings() {
   }
 
   if(databaseClient.setWriteOptions(WriteOptions()
-  .writePrecision(WRITE_PRECISION)
-  .batchSize(BATCH_SIZE)
-  .bufferSize(BUFFER_SIZE)
-  .flushInterval(FLUSH_INTERVAL)
-  .retryInterval(RETRY_INTERVAL)
-  .maxRetryInterval(MAX_RETRY_INTERVAL)
-  .maxRetryAttempts(MAX_RETRY_ATTEMPTS)
+    .writePrecision(WRITE_PRECISION)
+    .batchSize(BATCH_SIZE)
+    .bufferSize(BUFFER_SIZE)
+    .flushInterval(FLUSH_INTERVAL)
+    .retryInterval(RETRY_INTERVAL)
+    .maxRetryInterval(MAX_RETRY_INTERVAL)
+    .maxRetryAttempts(MAX_RETRY_ATTEMPTS)
   )) {
     DEBUG_PRINTLN("Database write options set.");
   }
@@ -84,7 +86,14 @@ void setDataPoints() {
 
 
 /*
+  Save data to database. Used for float values.
+  Parameters:
+  const char *tag = tag used to identify what data is being stored.
+  float value = value that is being saved.
 
+  Return:
+  0 if data was saved succesfully
+  1 if data was not saved.
 */
 int storeValue(const char *tag, float value) {
   // Use timeSynced to see when time is finished syncing. Without sync timestamp will be something of year 1970.
@@ -133,6 +142,16 @@ int storeValue(const char *tag, float value) {
 }
 
 
+/*
+  Save data to database. Used for integers values.
+  Parameters:
+  const char *tag = tag used to identify what data is being stored.
+  int value = value that is being saved.
+
+  Return:
+  0 if data was saved succesfully
+  1 if data was not saved.
+*/
 int storeValue(const char *tag, int value) {
   // Use timeSynced to see when time is finished syncing. Without sync timestamp will be something of year 1970.
   if(timeSynced) {

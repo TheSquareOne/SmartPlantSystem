@@ -52,6 +52,7 @@ void readMQTTCallback(char* topic, byte* payload, unsigned int length) {
   DEBUG_PRINT("] ");
   DEBUG_PRINTLN((char*)payload);
 
+  // Do action based on topic.
   if(strcmp(topic, MQTT_topics[0]) == 0) {
     setWateringThreshold(payload);
   }
