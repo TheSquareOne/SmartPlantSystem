@@ -58,8 +58,18 @@ void loop() {
 
     // Soil moisture
     if(!getSoilMoisture(&soilMoisture)) {
-      storeValue("soilMoisture", soilMoisture);
-      runningSoilMoisture.add(soilMoisture);
+
+      // If soilmoisture is over 2900, sensor is most likely out of soil and measurements can be ignored.
+      // Lower than 2900 will be added to runningSoilMoisture and stored to DB.
+      if(soilMoisture < 2900) {
+        storeValue("soilMoisture", soilMoisture);
+        runningSoilMoisture.add(soilMoisture);
+      }
+      else {
+        VERBOSE_PRINT("High soil moisture reading (");
+        VERBOSE_PRINT(soilMoisture);
+        VERBOSE_PRINTLN("). Sensor is most likely out of soil. Ignoring measurement.");
+      }
     }
 
     // Try if watering is needed.
